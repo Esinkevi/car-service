@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Проверка клиента и автомобиля</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 60px;
+            padding: 40px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h2 {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center">Проверка клиента по номеру телефона</h2>
+
+    <!-- Сообщение об успешной записи -->
+    <div th:if="${recordCreated}" class="alert alert-success text-center mt-3">
+        ✅ Запись на сервис успешно добавлена!
+    </div>
+
+    <!-- Форма ввода номера телефона -->
+    <form action="/records/new" method="get" class="mb-4">
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Номер телефона</label>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required
+                   th:value="${phoneNumber}">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Проверить</button>
+    </form>
+
+    <!-- Клиент найден -->
+    <div th:if="${ownerExists != null}">
+        <div th:if="${ownerExists}" class="alert alert-success text-center">
+            ✅ Клиент найден в базе данных.
+        </div>
+
+        <!-- Клиент не найден -->
+        <div th:if="${!ownerExists}">
+            <div class="alert alert-warning text-center">
+                ❗ Клиент не найден. Заполните данные для создания.
+            </div>
+
+            <form action="/records/new/createNewOwner" method="post">
+                <input type="hidden" name="phoneNumber" th:value="${phoneNumber}"/>
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Имя</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Фамилия</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Создать клиента</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Проверка автомобиля (только если клиент найден) -->
+    <div th:if="${ownerExists}">
+        <h2 class="text-center mt-5">Проверка автомобиля по номеру регистрации</h2>
+
+        <form action="/records/new" method="get" class="mb-4">
+            <input type="hidden" name="phoneNumber" th:value="${phoneNumber}"/>
+            <div class="mb-3">
+                <label for="numberPlate" class="form-label">Номер автомобиля</label>
+                <input type="text" class="form-control" id="numberPlate" name="numberPlate" required
+                       th:value="${numberPlate}">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Проверить</button>
+        </form>
+
+        <!-- Автомобиль найден -->
+        <div th:if="${carExists != null}">
+            <div th:if="${carExists}" class="alert alert-success text-center">
+                ✅ Автомобиль найден в базе данных.
+            </div>
+
+            <!-- Автомобиль не найден -->
+            <div th:if="${!carExists}">
+                <div class="alert alert-warning text-center">
+                    ❗ Автомобиль не найден. Заполните данные для создания.
+                </div>
+
+                <form action="/records/new/createCar" method="post">
+                    <input type="hidden" name="phoneNumber" th:value="${phoneNumber}"/>
+                    <input type="hidden" name="numberPlate" th:value="${numberPlate}"/>
+
+                    <div class="mb-3">
+                        <label for="carBrand" class="form-label">Марка автомобиля</label>
+                        <input type="text" class="form-control" id="carBrand" name="carBrand" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="carModel" class="form-label">Модель автомобиля</label>
+                        <input type="text" class="form-control" id="carModel" name="carModel" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="vinCode" class="form-label">VIN код</label>
+                        <input type="text" class="form-control" id="vinCode" name="vinCode" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fuelType" class="form-label">Тип топлива</label>
+                        <input type="text" class="form-control" id="fuelType" name="fuelType" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Создать автомобиль</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Форма добавления задачи -->
+    <div th:if="${carExists}">
+        <h2 class="text-center mt-5">Добавить задачу</h2>
+
+        <form action="/records/new/createTask" method="post">
+            <input type="hidden" name="phoneNumber" th:value="${phoneNumber}"/>
+            <input type="hidden" name="numberPlate" th:value="${numberPlate}"/>
+
+            <div class="mb-3">
+                <label for="taskDescription" class="form-label">Описание задачи</label>
+                <input type="text" class="form-control" name="taskDescription" required/>
+            </div>
+
+            <div class="mb-3">
+                <label for="odometer" class="form-label">Пробег</label>
+                <input type="number" class="form-control" name="odometer" required/>
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Цена</label>
+                <input type="number" step="0.01" class="form-control" name="price" required/>
+            </div>
+
+            <button type="submit" class="btn btn-info w-100">Добавить задачу</button>
+        </form>
+    </div>
+
+    <!-- Форма записи на сервис -->
+    <div th:if="${carExists}">
+        <h2 class="text-center mt-5">Запись на сервис</h2>
+
+        <form action="/records/new/createRecordOnService" method="post">
+            <input type="hidden" name="phoneNumber" th:value="${phoneNumber}"/>
+            <input type="hidden" name="numberPlate" th:value="${numberPlate}"/>
+
+            <div class="mb-3">
+                <label for="recordDay" class="form-label">Дата</label>
+                <input type="date" class="form-control" name="recordDay" required/>
+            </div>
+
+            <div class="mb-3">
+                <label for="recordTime" class="form-label">Время</label>
+                <input type="time" class="form-control" name="recordTime" required/>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Записать</button>
+        </form>
+    </div>
+</div>
+<div th:if="${recordCreated}" class="alert alert-success">
+    Запись успешно создана! Сейчас вы будете перенаправлены на главную страницу...
+</div>
+<script th:if="${recordCreated}">
+    setTimeout(function() {
+        window.location.href = '/';
+    }, 3000); // 3 секунды
+</script>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>СТО — Панель управления</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+<div class="max-w-6xl mx-auto py-12 px-4">
+
+    <!-- Заголовок и кнопка -->
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-4xl font-bold">Система учета СТО</h1>
+        <a href="/records/new"
+           class="bg-blue-600 text-white px-5 py-2 rounded-xl text-lg shadow hover:bg-blue-700 transition">
+            ➕ Новая запись
+        </a>
+    </div>
+
+    <!-- Подзаголовок -->
+    <p class="text-lg text-center mb-10">
+        Управляйте клиентами, автомобилями и их обслуживанием быстро и удобно
+    </p>
+
+    <!-- Карточки разделов -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <a href="/clients"
+           class="bg-white shadow-md rounded-2xl p-6 text-center hover:bg-blue-100 transition">
+            <div class="text-3xl mb-2">📋</div>
+            <div class="text-lg font-semibold">Клиенты</div>
+        </a>
+        <a href="/cars"
+           class="bg-white shadow-md rounded-2xl p-6 text-center hover:bg-green-100 transition">
+            <div class="text-3xl mb-2">🚗</div>
+            <div class="text-lg font-semibold">Автомобили</div>
+        </a>
+        <a href="/services"
+           class="bg-white shadow-md rounded-2xl p-6 text-center hover:bg-yellow-100 transition">
+            <div class="text-3xl mb-2">🔧</div>
+            <div class="text-lg font-semibold">Обслуживания</div>
+        </a>
+        <a href="/reports"
+           class="bg-white shadow-md rounded-2xl p-6 text-center hover:bg-purple-100 transition">
+            <div class="text-3xl mb-2">📊</div>
+            <div class="text-lg font-semibold">Отчеты</div>
+        </a>
+    </div>
+
+    <!-- Ближайшие обслуживания -->
+    <div>
+        <h2 class="text-2xl font-semibold mb-4">📅 Записи на сегодня и завтра</h2>
+
+        <!-- Сегодня -->
+        <div>
+            <h3 class="text-xl font-semibold mb-2">Сегодня</h3>
+            <table class="w-full bg-white rounded-xl shadow text-left">
+                <thead class="bg-gray-200">
+                <tr>
+                    <th class="p-3">Время</th>
+                    <th class="p-3">Клиент</th>
+                    <th class="p-3">Авто</th>
+                    <th class="p-3">Услуга</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="record : ${todayRecords}">
+                    <td class="p-3" th:text="${record.time}"></td>
+                    <td class="p-3" th:text="${record.ownerName + ' ' + record.ownerLastName}"></td>
+                    <td class="p-3" th:text="${record.carBrand + ' ' + record.carModel}"></td>
+                    <td class="p-3" th:text="${record.taskDescription}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Завтра -->
+        <div class="mt-8">
+            <h3 class="text-xl font-semibold mb-2">Завтра</h3>
+            <table class="w-full bg-white rounded-xl shadow text-left">
+                <thead class="bg-gray-200">
+                <tr>
+                    <th class="p-3">Время</th>
+                    <th class="p-3">Клиент</th>
+                    <th class="p-3">Авто</th>
+                    <th class="p-3">Услуга</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="record : ${tomorrowRecords}">
+                    <td class="p-3" th:text="${record.time}"></td>
+                    <td class="p-3" th:text="${record.ownerName + ' ' + record.ownerLastName}"></td>
+                    <td class="p-3" th:text="${record.carBrand + ' ' + record.carModel}"></td>
+                    <td class="p-3" th:text="${record.taskDescription}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
