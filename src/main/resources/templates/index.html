@@ -65,7 +65,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="record : ${todayRecords}">
-                    <td class="p-3" th:text="${record.time}"></td>
+                    <td class="p-3" th:text="${record.recordTime}"></td>
                     <td class="p-3" th:text="${record.ownerName + ' ' + record.ownerLastName}"></td>
                     <td class="p-3" th:text="${record.carBrand + ' ' + record.carModel}"></td>
                     <td class="p-3" th:text="${record.taskDescription}"></td>
@@ -88,7 +88,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="record : ${tomorrowRecords}">
-                    <td class="p-3" th:text="${record.time}"></td>
+                    <td class="p-3" th:text="${record.recordTime}"></td>
                     <td class="p-3" th:text="${record.ownerName + ' ' + record.ownerLastName}"></td>
                     <td class="p-3" th:text="${record.carBrand + ' ' + record.carModel}"></td>
                     <td class="p-3" th:text="${record.taskDescription}"></td>

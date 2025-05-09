@@ -20,7 +20,7 @@ public class ClientsController {
     public String getAllClients(Model model) {
         List<Owner> clients = ownerService.findAllOwner();
         model.addAttribute("clients", clients);
-        return "clients-list";
+        return "clients/clients-list";
     }
 
     //Создай GET-метод для "/clients/edit/{id}" в ClientsController — для показа формы редактирования.

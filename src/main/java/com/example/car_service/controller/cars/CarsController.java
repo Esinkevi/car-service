@@ -23,7 +23,7 @@ public class CarsController {
     public String getAllCars(Model model){
         List<Car> cars = carService.findAllCars();
         model.addAttribute("cars", cars);
-        return "cars-list";
+        return "cars/cars-list";
     }
     @PostMapping("/delete/{id}")
     public String deleteCar(@PathVariable Long id){

@@ -41,7 +41,7 @@ public class ServiceRecordController {
             }
         }
 
-        return "add-records-form";
+        return "ServiceRecord/add-records-form";
     }
 
     @PostMapping("/createNewOwner")
