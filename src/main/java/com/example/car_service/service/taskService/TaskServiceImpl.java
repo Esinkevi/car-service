@@ -3,7 +3,7 @@ package com.example.car_service.service.taskService;
 import com.example.car_service.dto.TaskDTO;
 import com.example.car_service.model.Car;
 import com.example.car_service.model.Task;
-import com.example.car_service.model.repositories.TaskRepository;
+import com.example.car_service.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

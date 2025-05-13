@@ -2,7 +2,7 @@ package com.example.car_service.service.ownerService;
 
 import com.example.car_service.dto.OwnerDTO;
 import com.example.car_service.model.Owner;
-import com.example.car_service.model.repositories.OwnerRepository;
+import com.example.car_service.repositories.OwnerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

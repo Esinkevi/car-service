@@ -1,4 +1,4 @@
-package com.example.car_service.model.repositories;
+package com.example.car_service.repositories;
 
 import com.example.car_service.model.ServiceRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +10,8 @@ import java.util.List;
 @Repository
 public interface ServiceRecordRepository extends JpaRepository<ServiceRecord, Long> {
     List<ServiceRecord> findAllByRecordDay(LocalDate date);
+
+    List<ServiceRecord> findAllByRecordDayBetween(LocalDate startDate, LocalDate endDate);
+
+
 }

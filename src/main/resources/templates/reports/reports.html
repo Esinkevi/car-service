@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчёты</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+<div class="max-w-6xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">📊 Отчёты</h1>
+
+    <!-- Универсальная форма -->
+    <form method="get" class="bg-white p-4 rounded-xl shadow mb-6 flex gap-4 items-end">
+        <div>
+            <label class="block font-semibold">Дата начала:</label>
+            <input type="date" name="startDate" class="border rounded p-2 w-full" required>
+        </div>
+        <div>
+            <label class="block font-semibold">Дата окончания:</label>
+            <input type="date" name="endDate" class="border rounded p-2 w-full" required>
+        </div>
+        <div class="flex gap-2">
+            <button type="submit" formaction="/reports/getAllCars"
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Авто
+            </button>
+            <button type="submit" formaction="/reports/getAllOwners"
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                Владельцы
+            </button>
+            <button type="submit" formaction="/reports/getResults"
+                    class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+                Задачи
+            </button>
+        </div>
+    </form>
+
+    <!-- 🚗 Отчёт по авто -->
+    <div th:if="${cars != null}">
+        <h2 class="text-2xl font-semibold mb-4">🚗 Автомобили</h2>
+        <table class="w-full bg-white rounded-xl shadow text-left">
+            <thead class="bg-gray-200">
+            <tr>
+                <th class="p-3">Госномер</th>
+                <th class="p-3">Марка</th>
+                <th class="p-3">Модель</th>
+                <th class="p-3">VIN</th>
+                <th class="p-3">Топливо</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="car : ${cars}" class="border-b">
+                <td class="p-3" th:text="${car.numberPlate}"></td>
+                <td class="p-3" th:text="${car.carBrand}"></td>
+                <td class="p-3" th:text="${car.carModel}"></td>
+                <td class="p-3" th:text="${car.vinCode}"></td>
+                <td class="p-3" th:text="${car.fuelType}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 👤 Отчёт по владельцам -->
+    <div th:if="${owner != null and owner[0]?.phoneNumber != null}">
+        <h2 class="text-2xl font-semibold mt-12 mb-4">👤 Владельцы</h2>
+        <table class="w-full bg-white rounded-xl shadow text-left">
+            <thead class="bg-gray-200">
+            <tr>
+                <th class="p-3">Имя</th>
+                <th class="p-3">Фамилия</th>
+                <th class="p-3">Телефон</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="owner : ${owner}" class="border-b">
+                <td class="p-3" th:text="${owner.name}"></td>
+                <td class="p-3" th:text="${owner.lastName}"></td>
+                <td class="p-3" th:text="${owner.phoneNumber}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 🧾 Отчёт по задачам -->
+    <div th:if="${results != null}">
+        <h2 class="text-2xl font-semibold mt-12 mb-4">🧾 Выполненные задачи</h2>
+        <table class="w-full bg-white rounded-xl shadow text-left">
+            <thead class="bg-gray-200">
+            <tr>
+                <th class="p-3">Описание</th>
+                <th class="p-3">Сумма</th>
+                <th class="p-3">Марка</th>
+                <th class="p-3">Модель</th>
+                <th class="p-3">Клиент</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="res : ${results}" class="border-b">
+                <td class="p-3" th:text="${res.taskDescription}"></td>
+                <td class="p-3" th:text="${res.price} + ' грн'"></td>
+                <td class="p-3" th:text="${res.carBrand}"></td>
+                <td class="p-3" th:text="${res.carModel}"></td>
+                <td class="p-3" th:text="${res.ownerName}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

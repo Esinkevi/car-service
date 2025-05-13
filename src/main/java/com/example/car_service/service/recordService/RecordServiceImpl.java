@@ -9,7 +9,7 @@ import com.example.car_service.model.Car;
 import com.example.car_service.model.Owner;
 import com.example.car_service.model.ServiceRecord;
 import com.example.car_service.model.Task;
-import com.example.car_service.model.repositories.ServiceRecordRepository;
+import com.example.car_service.repositories.ServiceRecordRepository;
 import com.example.car_service.service.carService.CarService;
 import com.example.car_service.service.ownerService.OwnerService;
 import com.example.car_service.service.taskService.TaskService;
